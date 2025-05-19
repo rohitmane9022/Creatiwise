@@ -1,12 +1,30 @@
-# React + Vite
+# Creatiwise Dashboard UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive, and accessible Dashboard UI built using React, Vite, Tailwind CSS, and Material UI. This project demonstrates component-based architecture, clean design, and effective use of modern libraries like Radix UI and TanStack Table.
 
-Currently, two official plugins are available:
+### 🌐 Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🔗 Link:- https://creatiwise-pi.vercel.app/
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🚀 Tech Stack
+
+- **Frontend Framework**: React 19
+- **Bundler**: Vite
+- **Styling**: Tailwind CSS, Material UI
+- **UI Components**: Shadcn
+- **Routing**: React Router DOM (v7)
+- **Tables**: TanStack React Table
+- **Icons**: Lucide React, React Icons
+
+---
+
+## 📦 Installation
+
+Clone the project and install dependencies:
+
+```bash
+git clone https://github.com/your-username/creatiwise-dashboard.git
+cd creatiwise-dashboard
+npm install
