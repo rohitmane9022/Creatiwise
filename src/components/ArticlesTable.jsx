@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect } from 'react';
 import {
   Table,
   TableBody,
@@ -6,12 +6,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { Input } from "@/components/ui/input"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Button } from "@/components/ui/button"
-import { FaWordpress } from "react-icons/fa"
-import { MoreHorizontal, ChevronDown, ChevronUp } from "lucide-react"
+} from "@/components/ui/table";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
+import { FaWordpress } from "react-icons/fa";
+import { MoreHorizontal, ChevronDown, ChevronUp } from "lucide-react";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 const articlesData = [
   { title: 'How to Improve Your Skills in League of Legends', keyword: 'league of legends [2240000]', words: 4575, createdOn: '20 hours ago' },
@@ -23,71 +25,81 @@ const articlesData = [
   { title: "Backlinks 101: What are backlinks and why they're important [Free template]", keyword: 'backlinks [8100]', words: 2261, createdOn: '---' },
   { title: '7 Leading AI SEO Tools in 2024 (Ranked & Compared)', keyword: 'ai seo software [880]', words: 1543, createdOn: '---' },
   { title: 'Unlimited Graphic Design Services You Can Rely On', keyword: 'unlimited graphic design services [390]', words: 1974, createdOn: '---' },
-]
+];
 
 const getArticlesPromise = new Promise((resolve) => {
-  setTimeout(() => resolve(articlesData), 1000)
-})
+  setTimeout(() => resolve(articlesData), 1000);
+});
 
 export default function ArticlesTable() {
-  const [articles, setArticles] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [searchTerm, setSearchTerm] = useState('')
-  const [sortOrder, setSortOrder] = useState('asc')
-  const [activeButton, setActiveButton] = useState('Generated Articles')
-  const [selectedRows, setSelectedRows] = useState([])
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortOrder, setSortOrder] = useState('asc');
+  const [activeButton, setActiveButton] = useState('Generated Articles');
+  const [selectedRows, setSelectedRows] = useState([]);
 
   useEffect(() => {
     getArticlesPromise
       .then((data) => {
-        setArticles(data)
-        setLoading(false)
+        setArticles(data);
+        setLoading(false);
       })
       .catch((err) => {
-        setError(err.message)
-        setLoading(false)
-      })
-  }, [])
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
 
   const toggleSortOrder = () => {
-    setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'))
-  }
+    setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'));
+  };
 
-  const filteredArticles = useMemo(() => {
-    const filtered = articles.filter(article =>
+  
+  const filteredArticles = articles
+    .filter(article =>
       article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       article.keyword.toLowerCase().includes(searchTerm.toLowerCase())
     )
-    return filtered.sort((a, b) =>
+    .sort((a, b) =>
       sortOrder === 'asc' ? a.words - b.words : b.words - a.words
-    )
-  }, [articles, searchTerm, sortOrder])
+    );
 
   const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value)
-  }
+    setSearchTerm(e.target.value);
+  };
 
-  const isAllSelected = filteredArticles.length > 0 && selectedRows.length === filteredArticles.length
+  const isAllSelected = filteredArticles.length > 0 && selectedRows.length === filteredArticles.length;
 
   const toggleSelectAll = () => {
     if (isAllSelected) {
-      setSelectedRows([])
+      setSelectedRows([]);
     } else {
-      setSelectedRows(filteredArticles.map((_, index) => index))
+      setSelectedRows(filteredArticles.map((_, index) => index));
     }
-  }
+  };
 
   const toggleRowSelect = (index) => {
     if (selectedRows.includes(index)) {
-      setSelectedRows(selectedRows.filter(i => i !== index))
+      setSelectedRows(selectedRows.filter(i => i !== index));
     } else {
-      setSelectedRows([...selectedRows, index])
+      setSelectedRows([...selectedRows, index]);
     }
+  };
+
+  if (loading) {
+    return (
+      <Box
+        className="fixed inset-0 flex items-center justify-center bg-background/80 z-50"
+        aria-label="Loading"
+      >
+        <CircularProgress />
+      </Box>
+    );
   }
 
-  if (loading) return <div className="text-center p-6">Loading articles...</div>
-  if (error) return <div className="text-center p-6 text-red-500">Error: {error}</div>
+  if (error) return <div className="text-center p-6 text-red-500">Error: {error}</div>;
 
   return (
     <div className="p-4 sm:w-[1260px]">
@@ -175,5 +187,5 @@ export default function ArticlesTable() {
         </div>
       </div>
     </div>
-  )
+  );
 }
